@@ -1,17 +1,17 @@
 #!/usr/bin/node
 
-export const apiCallsCounter = new WeakMap();
+export const weakMap = new WeakMap();
 
 export function queryAPI(endpoint) {
-  let callCount = apiCallsCounter.get(endpoint) || 0;
+  let called = weakMap.get(endpoint) || 0;
 
-  callCount += 1;
+  called += 1;
 
-  apiCallsCounter.set(endpoint, callCount);
+  weakMap.set(endpoint, called);
 
-  if (callCount >= 5) {
+  if (called >= 5) {
     throw new Error('Endpoint load is high');
   }
 
-  return callCount;
+  return called;
 }
